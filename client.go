@@ -40,10 +40,10 @@ func NewClient(url string, config *Config, httpClientTimeout uint32) (*Client, e
 	var c *http.Client
 
 	if config.Transport == nil {
-		c = &http.Client{Timeout: httpClientTimeout * time.Second}
+		c = &http.Client{Timeout: time.Duration(httpClientTimeout) * time.Second}
 	} else {
 		c = &http.Client{
-			Timeout: httpClientTimeout * time.Second,
+			Timeout: time.Duration(httpClientTimeout) * time.Second,
 			Transport: config.Transport,
 		}
 	}
