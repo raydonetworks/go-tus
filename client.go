@@ -23,7 +23,7 @@ type Client struct {
 }
 
 // NewClient creates a new tus client.
-func NewClient(url string, config *Config) (*Client, error) {
+func NewClient(url string, config *Config, httpClientTimeout uint32) (*Client, error) {
 	if config == nil {
 		config = DefaultConfig()
 	} else {
@@ -39,9 +39,10 @@ func NewClient(url string, config *Config) (*Client, error) {
 	var c *http.Client
 
 	if config.Transport == nil {
-		c = &http.Client{}
+		c = &http.Client{Timeout: httpClientTimeout}
 	} else {
 		c = &http.Client{
+			Timeout: httpClientTimeout,
 			Transport: config.Transport,
 		}
 	}

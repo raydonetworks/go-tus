@@ -94,7 +94,7 @@ func (s *UploadTestSuite) TestSmallUploadFromFile() {
 	err = f.Truncate(1048576) // 1 MB
 	s.Nil(err)
 
-	client, err := NewClient(s.url, nil)
+	client, err := NewClient(s.url, nil, 0)
 	s.Nil(err)
 
 	upload, err := NewUploadFromFile(f)
@@ -124,7 +124,7 @@ func (s *UploadTestSuite) TestLargeUpload() {
 	err = f.Truncate(1048576 * 150) // 150 MB
 	s.Nil(err)
 
-	client, err := NewClient(s.url, nil)
+	client, err := NewClient(s.url, nil, 0)
 	s.Nil(err)
 
 	upload, err := NewUploadFromFile(f)
@@ -144,7 +144,7 @@ func (s *UploadTestSuite) TestLargeUpload() {
 }
 
 func (s *UploadTestSuite) TestUploadFromBytes() {
-	client, err := NewClient(s.url, nil)
+	client, err := NewClient(s.url, nil, 0)
 	s.Nil(err)
 
 	upload := NewUploadFromBytes([]byte("1234567890"))
@@ -164,7 +164,7 @@ func (s *UploadTestSuite) TestUploadFromBytes() {
 }
 
 func (s *UploadTestSuite) TestOverridePatchMethod() {
-	client, err := NewClient(s.url, nil)
+	client, err := NewClient(s.url, nil, 0)
 	s.Nil(err)
 
 	client.Config.OverridePatchMethod = true
@@ -188,7 +188,7 @@ func (s *UploadTestSuite) TestOverridePatchMethod() {
 func (s *UploadTestSuite) TestConcurrentUploads() {
 	var wg sync.WaitGroup
 
-	client, err := NewClient(s.url, nil)
+	client, err := NewClient(s.url, nil, 0)
 	s.Nil(err)
 
 	for i := 0; i < 20; i++ {
@@ -248,7 +248,7 @@ func (s *UploadTestSuite) TestResumeUpload() {
 		},
 	}
 
-	client, err := NewClient(s.url, cfg)
+	client, err := NewClient(s.url, cfg, 0)
 	s.Nil(err)
 
 	upload, err := NewUploadFromFile(f)
