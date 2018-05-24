@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 const (
@@ -39,10 +40,10 @@ func NewClient(url string, config *Config, httpClientTimeout uint32) (*Client, e
 	var c *http.Client
 
 	if config.Transport == nil {
-		c = &http.Client{Timeout: httpClientTimeout}
+		c = &http.Client{Timeout: httpClientTimeout * time.Second}
 	} else {
 		c = &http.Client{
-			Timeout: httpClientTimeout,
+			Timeout: httpClientTimeout * time.Second,
 			Transport: config.Transport,
 		}
 	}
